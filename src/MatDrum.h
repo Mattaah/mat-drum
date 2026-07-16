@@ -21,13 +21,13 @@
 class MatDrum
 {
 private:
-  // variables to store trigger setings (sensibility, threshold, scan time, mask time, velocity curve)
+  // variables to store trigger setings (sensitivity, threshold, scan time, mask time, velocity curve)
    // index == drum pieces quantity
-  int    sensibility[QUANTITY_PIECES];
-  int      threshold[QUANTITY_PIECES]; 
-  int      scan_time[QUANTITY_PIECES]; 
-  int      mask_time[QUANTITY_PIECES]; 
-  int velocity_curve[QUANTITY_PIECES];
+  float    sensitivity[QUANTITY_PIECES];
+  int        threshold[QUANTITY_PIECES]; 
+  int        scan_time[QUANTITY_PIECES]; 
+  int        mask_time[QUANTITY_PIECES]; 
+  int   velocity_curve[QUANTITY_PIECES];
   // variables to store data read
   int      signal_kick;
   int     signal_snare;
@@ -47,25 +47,43 @@ private:
   int signal_ride_edge;
   // control state variables
   bool read_start;
+  // time variables
+  unsigned long previous_time_scan;
+  unsigned long  current_time_scan;
+  unsigned long previous_time_mask;
+  unsigned long  current_time_mask;
+  // channel variable
+  byte channel;
 
 public:
 
   // constructor
   MatDrum();
 
-  void begin();
+  void begin(byte channel);
 
   void end();
 
-  void set_sensitivity(const int drum_piece, int sens_value);
+  void set_sensitivity(const int DRUM_PIECE, int sens_value);
 
-  void set_threshold(const int drum_piece, int thold_value);
+  void set_threshold(const int DRUM_PIECE, int thold_value);
 
-  void set_scan_time(const int drum_piece, int scan_value);
+  void set_scan_time(const int DRUM_PIECE, int scan_value);
 
-  void set_mask_time(const int drum_piece, int mask_time);
-  
-  void set_velocity_curve(const int drum_piece, const int velo_curve);
-};
+  void set_mask_time(const int DRUM_PIECE, int mask_time);
+
+  bool is_out_scan_time();
+
+  bool is_out_mask_time();
+
+  void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
+
+  byte read_sensor(const byte ANALOG_PIN);
+
+  byte filter_signal(int raw_signal);
+
+  void send_note(const byte ANALOG_PIN, const byte MIDI_NOTE);
+
+}
 
 #endif

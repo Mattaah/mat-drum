@@ -51,7 +51,7 @@ MatDrum::MatDrum()
 void MatDrum::begin()
 {
   if (!read_start)
-  { 
+  {
     MyMIDI MIDI;
     MIDI.begin(); 
 
@@ -62,13 +62,19 @@ void MatDrum::begin()
 void MatDrum::set_sensitivity(const int drum_piece, int sens_value)
 {
   if ((drum_piece >= 0) && (1 <= sens_value && sens_value <= 32))
-  { sensibility[drum_piece] = sens_value; }
+  {
+    map (sens_value, 1, 32, 0.2, 2.0);
+    sensibility[drum_piece] = sens_value;
+  }
 }
 
 void MatDrum::set_threshold(const int drum_piece, int thold_value);
 {
   if ((drum_piece >= 0) && (0 <= thold_value && thold_value <= 31))
-  { threshold[drum_piece] = thold_value; }
+  {                             // bigger horizontal asymptote possible
+    map (thold_value, 0, 31, 0, (0.8 * 127)); 
+    threshold[drum_piece] = thold_value;
+  }
 }
 
 void MatDrum::set_scan_time(const int drum_piece, int scan_value);

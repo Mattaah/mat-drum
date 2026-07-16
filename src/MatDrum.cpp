@@ -104,7 +104,7 @@ bool MatDrum::is_out_scan_time(const int DRUM_PIECE)
 {
   bool answer = false;
 
-  if (0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES)
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && !hit_previous_note[DRUM_PIECE])
   {
     current_time_scan = millis();
 

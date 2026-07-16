@@ -55,12 +55,15 @@ private:
   unsigned long  current_time_mask;
   // channel variable
   byte channel;
+  // MIDI communication
+  MyMIDI MIDI;
 
 public:
 
   // constructor
   MatDrum();
 
+  // initialize MIDI communication
   void begin(byte channel);
 
   void end();

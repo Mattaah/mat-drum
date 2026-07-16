@@ -61,9 +61,26 @@ void MatDrum::begin()
 
 void MatDrum::set_sensitivity(const int drum_piece, int sens_value)
 {
-
+  if ((drum_piece >= 0) && (1 <= sens_value && sens_value <= 32))
+  { sensibility[drum_piece] = sens_value; }
 }
 
+void MatDrum::set_threshold(const int drum_piece, int thold_value);
+{
+  if ((drum_piece >= 0) && (0 <= thold_value && thold_value <= 31))
+  { threshold[drum_piece] = thold_value; }
+}
 
+void MatDrum::set_scan_time(const int drum_piece, int scan_value);
+{
+  if ((drum_piece >= 0) && (0 <= scan_value && scan_value <= 4))
+  { scan_time[drum_piece] = scan_value; }
+}
+
+void MatDrum::set_mask_time(const int drum_piece, int mask_time);
+{
+  if ((drum_piece >= 0) && (0 <= mask_time && mask_time <= 64))
+  { mask_time[drum_piece] = mask_time; }
+}
 
 

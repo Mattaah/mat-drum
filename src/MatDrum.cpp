@@ -26,6 +26,8 @@ MatDrum::MatDrum()
     scan_time[x]   = -1;
     mask_time[x]   = -1;
     velo_curve[x]  = -1;
+
+    hit_previous_note[x] = false;
   }
 
   signal_kick      = -1;
@@ -96,6 +98,8 @@ void MatDrum::set_mask_time(const int DRUM_PIECE, int mask_time);
   { mask_time[DRUM_PIECE] = mask_time; }
 }
 
+void MatDrum::set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
+
 bool MatDrum::is_out_scan_time(const int DRUM_PIECE)
 {
   bool answer = false;
@@ -115,7 +119,7 @@ bool MatDrum::is_out_mask_time(const int DRUM_PIECE)
 {
   bool answer = false;
 
-  if (0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES)
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && hit_previous_note[DRUM_PIECE])
   {
     current_time_mask = millis();
 
@@ -125,8 +129,6 @@ bool MatDrum::is_out_mask_time(const int DRUM_PIECE)
 
   return (answer);
 }
-
-void MatDrum::set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
 int MatDrum::read_sensor(const byte ANALOG_PIN)
 { return (analogWrite(ANALOG_PIN); }
@@ -142,6 +144,8 @@ byte MatDrum::filter_signal(const byte DRUM_PIECE, int raw_signal)
     new_sensitivty = map(sensitivity[DRUM_PIECE], 1, 32, 0.2, 2.0);
 
     new_signal = velocity * new_sensitivty;
+    if (new_signal > 127)
+    { new_signal = 127; }
   }
   else
   { new_signal = BYTE_ERROR; }
@@ -165,8 +169,8 @@ void MatDrum::send_note(const byte ANALOG_PIN, const byte MIDI_NOTE)
       (scan_tmp == 0 && mask_tmp == 0 && thold_tmp == 0))
   {
     if (velocity_tmp != 0)
-    { send_note_on(10, MIDI_NOTE, velocity_tmp); }
+    { send_note_on(10, MIDI_NOTE, velocity_tmp);  hit_previous_note[MIDI_NOTE] = true;  }
     else
-    { send_note_off(10, MIDI_NOTE, velocity_tmp); }
+    { send_note_off(10, MIDI_NOTE, velocity_tmp); hit_previous_note[MIDI_NOTE] = false; }
   }
 }

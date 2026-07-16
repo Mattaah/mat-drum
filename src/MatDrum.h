@@ -46,6 +46,7 @@ private:
   int signal_ride_bell;
   int signal_ride_edge;
   // control state variables
+  bool hit_previous_note[QUANTITY_PIECES];
   bool read_start;
   // time variables
   unsigned long previous_time_scan;
@@ -72,11 +73,11 @@ public:
 
   void set_mask_time(const int DRUM_PIECE, int mask_time);
 
+  void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
+
   bool is_out_scan_time();
 
   bool is_out_mask_time();
-
-  void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
   byte read_sensor(const byte ANALOG_PIN);
 

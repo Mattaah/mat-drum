@@ -91,6 +91,3 @@
 #define OPEN_CUICA         79
 #define MUTE_TRIANGLE      80
 #define OPEN_TRIANGLE      81
-
-// STATUS ERROR
-#define BYTE_ERROR 0b11111111

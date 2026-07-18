@@ -148,7 +148,7 @@ bool MatDrum::is_out_threshold(const int DRUM_PIECE, int velocity)
 int MatDrum::read_sensor(const byte ANALOG_PIN)
 { return (analogWrite(ANALOG_PIN); }
 
-byte MatDrum::filter_signal(const byte DRUM_PIECE, int raw_signal)
+byte MatDrum::filter_signal(const byte DRUM_PIECE, unsigned int raw_signal)
 {
   byte  new_signal     =  0b0;
   float new_sensitivty = 0.0f;
@@ -162,9 +162,7 @@ byte MatDrum::filter_signal(const byte DRUM_PIECE, int raw_signal)
     if (new_signal > 127)
     { new_signal = 127; }
   }
-  else
-  { new_signal = BYTE_ERROR; }
-
+  
   return (new_signal);
 }
 

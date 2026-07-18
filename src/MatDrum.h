@@ -122,9 +122,13 @@ public:
 
   void hit_tom_4(const byte ANALOG_PIN_TOM_4);
 
-  void hit_crash_1(const byte ANALOG_PIN_CRASH_1);
+  void hit_crash_1(const byte ANALOG_PIN_BOW);
 
-  void hit_crash_2(const byte ANALOG_PIN_CRASH_2);
+  void hit_crash_1(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE);
+
+  void hit_crash_2(const byte ANALOG_PIN_BOW);
+
+  void hit_crash_2(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE);
 
   void hit_kick(const byte ANALOG_PIN_KICK);
 

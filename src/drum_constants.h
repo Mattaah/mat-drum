@@ -59,8 +59,10 @@
 #define OPEN_HH            46 
 #define FOOT_HH            44 
 #define FOOT_SPLASH_HH     28
-#define CRASH_1            49 
-#define CRASH_2            57 
+#define CRASH_1_BOW        49
+#define CRASH_1_EDGE       // define
+#define CRASH_2_BOW        57
+#define CRASH_2_EDGE       // define 
 #define RIDE_1             51 
 #define RIDE_2             59 
 #define RIDE_BELL          53 

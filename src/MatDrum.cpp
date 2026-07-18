@@ -168,24 +168,24 @@ byte MatDrum::filter_signal(const byte DRUM_PIECE, int raw_signal)
   return (new_signal);
 }
 
-void MatDrum::send_note(const byte ANALOG_PIN, const byte MIDI_NOTE)
+void MatDrum::send_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {
   byte scan_tmp = 0b0, mask_tmp = 0b0, thold_tmp = 0b0, velocity_tmp = 0b0;
   int sensor_tmp = 0;
 
-  scan_tmp  = scan_time[MIDI_NOTE];
-  mask_tmp  = mask_time[MIDI_NOTE];
-  thold_tmp = threshold[MIDI_NOTE];
+  scan_tmp  = scan_time[DRUM_PIECE];
+  mask_tmp  = mask_time[DRUM_PIECE];
+  thold_tmp = threshold[DRUM_PIECE];
 
   sensor_tmp   =   read_sensor(ANALOG_PIN);
   velocity_tmp = filter_signal(sensor_tmp);
 
-  if ((is_out_scan_time(MIDI_NOTE) && is_out_mask_time(MIDI_NOTE) && is_out_threshold(MIDI_NOTE, velocity)) || 
+  if ((is_out_scan_time(DRUM_PIECE) && is_out_mask_time(DRUM_PIECE) && is_out_threshold(DRUM_PIECE, velocity)) || 
       (scan_tmp == 0 && mask_tmp == 0 && thold_tmp == 0))
   {
     if (velocity_tmp != 0)
-    { send_note_on(10, MIDI_NOTE, velocity_tmp);  hit_previous_note[MIDI_NOTE] = true;  }
+    { send_note_on(10, DRUM_PIECE, velocity_tmp);  hit_previous_note[DRUM_PIECE] = true;  }
     else
-    { send_note_off(10, MIDI_NOTE, velocity_tmp); hit_previous_note[MIDI_NOTE] = false; }
+    { send_note_off(10, DRUM_PIECE, velocity_tmp); hit_previous_note[DRUM_PIECE] = false; }
   }
 }

@@ -40,8 +40,8 @@
 #define RIDE_EDGE_POS   15
 */
 
-// MIDI_NOTE
-  // REMEMBER: this is the General MIDI notes specifications. If necessary, you can change the number of these
+// MIDI_NOTE - That you need to use in any function who requires the number of drum piece
+  // REMEMBER: that's the General MIDI notes specifications. If necessary, you can change the number of these
   // constants to ensure the program transmits data correctly.
 #define ACOUSTIC_BASS_DRUM 35
 #define BASS_DRUM          36 

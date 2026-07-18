@@ -7,7 +7,7 @@
   Author  : Mattah
   Version : 1.0.0
   Created : 16/07/2026
-  Modified: 16/07/2026
+  Modified: 18/07/2026
   License : MIT 
 */
 
@@ -23,11 +23,11 @@ class MatDrum
 private:
   // variables to store trigger setings (sensitivity, threshold, scan time, mask time, velocity curve)
    // index == drum pieces quantity
-  float    sensitivity[QUANTITY_PIECES];
-  int        threshold[QUANTITY_PIECES]; 
-  int        scan_time[QUANTITY_PIECES]; 
-  int        mask_time[QUANTITY_PIECES]; 
-  int   velocity_curve[QUANTITY_PIECES];
+  float    sensitivity[HIGHEST_MIDI_VALUE];
+  int        threshold[HIGHEST_MIDI_VALUE]; 
+  int        scan_time[HIGHEST_MIDI_VALUE]; 
+  int        mask_time[HIGHEST_MIDI_VALUE]; 
+  int   velocity_curve[HIGHEST_MIDI_VALUE];
   // variables to store data read
   int      signal_kick;
   int     signal_snare;
@@ -46,7 +46,7 @@ private:
   int signal_ride_bell;
   int signal_ride_edge;
   // control state variables
-  bool hit_previous_note[QUANTITY_PIECES];
+  bool hit_previous_note[HIGHEST_MIDI_VALUE];
   bool read_start;
   // time variables
   unsigned long previous_time_scan;
@@ -88,7 +88,7 @@ public:
 
   byte filter_signal(int raw_signal);
 
-  void send_note(const byte ANALOG_PIN, const byte MIDI_NOTE);
+  void send_note(const byte ANALOG_PIN, const byte DRUM_PIECE);
 
 }
 

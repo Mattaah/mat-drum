@@ -213,14 +213,70 @@ void MatDrum::hit_rim(const byte ANALOG_PIN_RIM)
   if (velocity_tmp != 0)
   {
     if (velocity_tmp >= threshold[RIM-1])
-    { send_note_on(10, RIM_SHOT, velocity_tmp); }
+    { send_note_on(10, RIM_SHOT, velocity_tmp); hit_previous_note[RIM_SHOT-1] = true; }
     else
-    { send_note_on(10, RIM,      velocity_tmp); }
-
-    hit_previous_note[DRUM_PIECE-1] = true;
+    { send_note_on(10, RIM,      velocity_tmp); hit_previous_note[RIM-1] = true; }
   }
   else
-  { send_note_off(10, RIM, velocity_tmp); hit_previous_note[DRUM_PIECE-1] = false; }
+  { send_note_off(10, RIM, velocity_tmp); hit_previous_note[RIM-1] = false; }
+}
+
+void MatDrum::hit_edge(const byte ANALOG_PIN_EDGE, const int DRUM_PIECE)
+{
+  byte velocity_tmp = 0b0;
+  int sensor_tmp = 0;
+
+  sensor_tmp = read_analog_sensor(ANALOG_PIN_EDGE);
+  velocity_tmp = filter_signal(sensor_tmp);
+
+  if (velocity_tmp != 0)
+  { send_note_on(10, velocity_tmp); hit_previous_note[DRUM_PIECE-1] = true; }
+  else
+  { send_note_off(10, DRUM_PIECE, velocity_tmp); hit_previous_note[DRUM_PIECE-1] = false; }
+}
+
+void MatDrum::hit_edge_ride(const byte ANALOG_PIN_EDGE)
+{
+  byte velocity_tmp = 0b0;
+  int sensor_tmp = 0;
+
+  sensor_tmp = read_analog_sensor(ANALOG_PIN_EDGE);
+  velocity_tmp = filter_signal(sensor_tmp);
+
+  if (velocity_tmp != 0)
+  { send_note_on(10, velocity_tmp); hit_previous_note[RIM-1] = true; }
+  else
+  { send_note_off(10, RIM, velocity_tmp); hit_previous_note[RIM-1] = false; }
+}
+
+void MatDrum::hit_bell(const byte ANALOG_PIN_BELL)
+{
+  byte velocity_tmp = 0b0;
+  int sensor_tmp = 0;
+
+  sensor_tmp = read_analog_sensor(ANALOG_PIN_BELL);
+  velocity_tmp = filter_signal(sensor_tmp);
+
+  if (velocity_tmp != 0)
+  { send_note_on(10, velocity_tmp); hit_previous_note[RIDE_BELL-1] = true; }
+  else
+  { send_note_off(10, RIDE_BELL, velocity_tmp); hit_previous_note[RIDE_BELL-1] = false; }
+}
+
+void MatDrum::hit_ride(const byte ANALOG_PIN_BOW)
+{ hit_note(ANALOG_PIN_BOW, RIDE_1); }
+
+void MatDrum::hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL)
+{ 
+  hit_note(ANALOG_PIN_BOW, RIDE_1); 
+  hit_bell(ANALOG_PIN_BELL);
+}
+
+void MatDrum::hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, const byte ANALOG_PIN_EDGE)
+{ 
+  hit_note(ANALOG_PIN_BOW, RIDE_1); 
+  hit_bell(ANALOG_PIN_BELL);
+  hit_edge_ride(ANALOG_PIN_EDGE);
 }
 
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)

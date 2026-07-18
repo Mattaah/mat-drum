@@ -102,6 +102,12 @@ public:
 
   void hit_rim(const byte ANALOG_PIN_RIM);
 
+  void hit_edge(const byte ANALOG_PIN_EDGE, const int DRUM_PIECE);
+
+  void hit_edge_ride(const byte ANALOG_PIN_EDGE);
+
+  void hit_bell(const byte ANALOG_PIN_BELL);
+
   void hit_ride(const byte ANALOG_PIN_BOW);
 
   void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL);

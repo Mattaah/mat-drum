@@ -57,7 +57,8 @@
 #define HIGH_TOM           50
 #define CLOSED_HH          42 
 #define OPEN_HH            46 
-#define PEDAL_HH           44 
+#define FOOT_HH            44 
+#define FOOT_SPLASH_HH     28
 #define CRASH_1            49 
 #define CRASH_2            57 
 #define RIDE_1             51 

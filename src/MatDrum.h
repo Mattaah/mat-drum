@@ -78,9 +78,11 @@ public:
 
   void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
-  bool is_out_scan_time();
+  bool is_out_scan_time(const int DRUM_PIECE);
 
-  bool is_out_mask_time();
+  bool is_out_mask_time(const int DRUM_PIECE);
+
+  bool is_out_threshold(const int DRUM_PIECE, int velocity);
 
   byte read_sensor(const byte ANALOG_PIN);
 

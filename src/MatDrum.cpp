@@ -135,6 +135,16 @@ bool MatDrum::is_out_mask_time(const int DRUM_PIECE)
   return (answer);
 }
 
+bool MatDrum::is_out_threshold(const int DRUM_PIECE, int velocity)
+{
+  bool answer = false;
+
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && velocity > threshold[DRUM_PIECE])
+  { answer = true; }
+
+  return (answer);
+}
+
 int MatDrum::read_sensor(const byte ANALOG_PIN)
 { return (analogWrite(ANALOG_PIN); }
 
@@ -170,7 +180,7 @@ void MatDrum::send_note(const byte ANALOG_PIN, const byte MIDI_NOTE)
   sensor_tmp   =   read_sensor(ANALOG_PIN);
   velocity_tmp = filter_signal(sensor_tmp);
 
-  if ((is_out_scan_time(MIDI_NOTE) && is_out_mask_time(MIDI_NOTE) && is_out_threshold(MIDI_NOTE)) || 
+  if ((is_out_scan_time(MIDI_NOTE) && is_out_mask_time(MIDI_NOTE) && is_out_threshold(MIDI_NOTE, velocity)) || 
       (scan_tmp == 0 && mask_tmp == 0 && thold_tmp == 0))
   {
     if (velocity_tmp != 0)

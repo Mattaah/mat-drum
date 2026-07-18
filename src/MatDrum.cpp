@@ -309,6 +309,9 @@ void MatDrum::hit_crash_2(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
   hit_note(ANALOG_PIN_BOW, CRASH_2_BOW);
 }
 
+void MatDrum::hit_kick(const byte ANALOG_PIN_KICK)
+{ hit_note(ANALOG_PIN_KICK, ACOUSTIC_BASS_DRUM);
+
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {
   byte scan_tmp = 0b0, mask_tmp = 0b0, thold_tmp = 0b0, velocity_tmp = 0b0;

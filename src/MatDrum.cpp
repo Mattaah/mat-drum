@@ -291,19 +291,19 @@ void MatDrum::hit_tom_3(const byte ANALOG_PIN_TOM_3)
 void MatDrum::hit_tom_4(const byte ANALOG_PIN_TOM_4)
 { hit_note(ANALOG_PIN_TOM_4, LOW_FLOOR_TOM); }
 
-void hit_crash_1(const byte ANALOG_PIN_EDGE)
+void MatDrum::hit_crash_1(const byte ANALOG_PIN_EDGE)
 { hit_edge(ANALOG_PIN_EDGE, CRASH_1_EDGE); }
 
-void hit_crash_1(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
+void MatDrum::hit_crash_1(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
 {
   hit_edge(ANALOG_PIN_EDGE, CRASH_1_EDGE);
   hit_note(ANALOG_PIN_BOW, CRASH_1_BOW);
 }
 
-void hit_crash_2(const byte ANALOG_PIN_EDGE)
+void MatDrum::hit_crash_2(const byte ANALOG_PIN_EDGE)
 { hit_edge(ANALOG_PIN_EDGE, CRASH_2_EDGE); }
 
-void hit_crash_2(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
+void MatDrum::hit_crash_2(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
 {
   hit_edge(ANALOG_PIN_EDGE, CRASH_2_EDGE);
   hit_note(ANALOG_PIN_BOW, CRASH_2_BOW);

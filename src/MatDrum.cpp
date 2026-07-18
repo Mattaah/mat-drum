@@ -7,7 +7,7 @@
   Author  : Mattah
   Version : 1.0.0
   Created : 16/07/2026
-  Modified: 16/07/2026
+  Modified: 18/07/2026
   License : MIT 
 */
 
@@ -166,7 +166,7 @@ byte MatDrum::filter_signal(const byte DRUM_PIECE, unsigned int raw_signal)
   return (new_signal);
 }
 
-void MatDrum::send_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
+void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {
   byte scan_tmp = 0b0, mask_tmp = 0b0, thold_tmp = 0b0, velocity_tmp = 0b0;
   int sensor_tmp = 0;

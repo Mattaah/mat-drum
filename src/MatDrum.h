@@ -88,8 +88,32 @@ public:
 
   byte filter_signal(int raw_signal);
 
-  void send_note(const byte ANALOG_PIN, const byte DRUM_PIECE);
+  byte rim_edge_gain()
 
+  void hit_snare(const byte ANALOG_PIN_HEAD, int sense, int thold, int scan_time, int mask_time);
+
+  void hit_rim(const byte ANALOG_PIN_RIM, int rim_gain, int xstick_thold);
+
+  void hit_ride(const byte ANALOG_PIN_BOW, int sense, int thold, int scan_time, int mask_time);
+
+  void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, 
+            int sense, int thold, int scan_time, int mask_time, int rim_gain_bow);
+
+  void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, const byte ANALOG_PIN_EDGE 
+            int sense, int thold, int scan_time, int mask_time, 
+            int rim_gain_bow, int rim_gain_edge);
+
+  void hit_hihat();
+
+  void hit_hihat_control();
+
+  void hit_tom();
+
+  void hit_crash();
+
+  void hit_kick();
+
+  void hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE);
 }
 
 #endif

@@ -84,7 +84,7 @@ public:
 
   bool is_out_threshold(const int DRUM_PIECE, int velocity);
 
-  byte read_sensor(const byte ANALOG_PIN);
+  int read_sensor(const byte ANALOG_PIN);
 
   byte filter_signal(int raw_signal);
 

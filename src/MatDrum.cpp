@@ -279,6 +279,18 @@ void MatDrum::hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, co
   hit_edge_ride(ANALOG_PIN_EDGE);
 }
 
+void MatDrum::hit_tom_1(const byte ANALOG_PIN_TOM_1)
+{ hit_note(ANALOG_PIN_TOM_1, HIGH_TOM); }
+
+void MatDrum::hit_tom_2(const byte ANALOG_PIN_TOM_2)
+{ hit_note(ANALOG_PIN_TOM_2, LOW_HIGH_MID_TOM); }
+
+void MatDrum::hit_tom_3(const byte ANALOG_PIN_TOM_3)
+{ hit_note(ANALOG_PIN_TOM_3, HIGH_FLOOR_TOM); }
+
+void MatDrum::hit_tom_4(const byte ANALOG_PIN_TOM_4)
+{ hit_note(ANALOG_PIN_TOM_4, LOW_FLOOR_TOM); }
+
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {
   byte scan_tmp = 0b0, mask_tmp = 0b0, thold_tmp = 0b0, velocity_tmp = 0b0;

@@ -74,11 +74,13 @@ public:
 
   void set_scan_time(const int DRUM_PIECE, int scan_value);
 
-  void set_mask_time(const int DRUM_PIECE, int mask_time);
+  void set_mask_time(const int DRUM_PIECE, int mask_value);
 
   void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
   void set_rim_edge_gain(const int DRUM_PIECE, float gain_value);
+
+  void set_xstick_threshold(const int DRUM_PIECE, int thold_value);
 
   bool is_out_scan_time(const int DRUM_PIECE);
 
@@ -90,33 +92,47 @@ public:
 
   byte filter_signal(int raw_signal);
 
-  void hit_snare(const byte ANALOG_PIN_HEAD, int sense, int thold, int scan_time, int mask_time);
+  void adjust_head(const int DRUM_PIECE, int sense, int thold, int scan_value, int mask_value);
+
+  void adjust_rim(int rim_gain, int xstick_thold);
+
+  void adjust_edge(int edge_gain);
+
+  void hit_snare(const byte ANALOG_PIN_SNARE);
 
   void hit_rim(const byte ANALOG_PIN_RIM, int rim_gain, int xstick_thold);
 
-  void hit_ride(const byte ANALOG_PIN_BOW, int sense, int thold, int scan_time, int mask_time);
+  void hit_ride(const byte ANALOG_PIN_BOW);
 
-  void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, 
-            int sense, int thold, int scan_time, int mask_time, int rim_gain_bow);
+  void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL);
 
-  void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, const byte ANALOG_PIN_EDGE 
-            int sense, int thold, int scan_time, int mask_time, 
-            int rim_gain_bow, int rim_gain_edge);
+  void hit_ride(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_BELL, const byte ANALOG_PIN_EDGE);
 
-  void hit_hihat(const byte ANALOG_PIN_BOW, int sense, int thold, int scan_time, int mask_time);
+  void hit_tom_1(const byte ANALOG_PIN_TOM_1);
 
-  void hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE, 
-                 int sense, int thold, int scan_time, int mask_time, int rim_gain_edge);
+  void hit_tom_2(const byte ANALOG_PIN_TOM_2);
 
-  void hit_hihat_control(const byte DIGITAL_PIN_PEDAL);
+  void hit_tom_3(const byte ANALOG_PIN_TOM_3);
 
-  void hit_hihat_control(const byte ANALOG_PIN_PEDAL);
+  void hit_tom_4(const byte ANALOG_PIN_TOM_4);
 
-  void hit_tom(const byte ANALOG_PIN_TOM, int sense, int thold, int scan_time, int mask_time);
+  void hit_crash_1(const byte ANALOG_PIN_CRASH_1);
 
-  void hit_crash(const byte ANALOG_PIN_CRASH, int sense, int thold, int scan_time, int mask_time);
+  void hit_crash_2(const byte ANALOG_PIN_CRASH_2);
 
-  void hit_kick(const byte ANALOG_PIN_KICK, int sense, int thold, int scan_time, int mask_time);
+  void hit_kick(const byte ANALOG_PIN_KICK);
+
+  void hit_hihat(const byte ANALOG_PIN_BOW);
+
+  void hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE);
+
+  void hihat_control_CC(const byte DIGITAL_PIN_PEDAL);
+
+  void hihat_control_CC(const byte ANALOG_PIN_PEDAL);
+
+  void hit_hihat_pedal();
+
+  void hit_hihat_footsplash();
 
   void hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE);
 }

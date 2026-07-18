@@ -207,7 +207,7 @@ void MatDrum::hit_rim(const byte ANALOG_PIN_RIM)
   byte velocity_tmp = 0b0;
   int sensor_tmp = 0;
 
-  sensor_tmp = read_analog_sensor(ANALOG_PIN_RIM);
+  sensor_tmp   = read_analog_sensor(ANALOG_PIN_RIM);
   velocity_tmp = filter_signal(sensor_tmp);
 
   if (velocity_tmp != 0)
@@ -226,7 +226,7 @@ void MatDrum::hit_edge(const byte ANALOG_PIN_EDGE, const int DRUM_PIECE)
   byte velocity_tmp = 0b0;
   int sensor_tmp = 0;
 
-  sensor_tmp = read_analog_sensor(ANALOG_PIN_EDGE);
+  sensor_tmp   = read_analog_sensor(ANALOG_PIN_EDGE);
   velocity_tmp = filter_signal(sensor_tmp);
 
   if (velocity_tmp != 0)
@@ -240,7 +240,7 @@ void MatDrum::hit_edge_ride(const byte ANALOG_PIN_EDGE)
   byte velocity_tmp = 0b0;
   int sensor_tmp = 0;
 
-  sensor_tmp = read_analog_sensor(ANALOG_PIN_EDGE);
+  sensor_tmp   = read_analog_sensor(ANALOG_PIN_EDGE);
   velocity_tmp = filter_signal(sensor_tmp);
 
   if (velocity_tmp != 0)
@@ -254,7 +254,7 @@ void MatDrum::hit_bell(const byte ANALOG_PIN_BELL)
   byte velocity_tmp = 0b0;
   int sensor_tmp = 0;
 
-  sensor_tmp = read_analog_sensor(ANALOG_PIN_BELL);
+  sensor_tmp   = read_analog_sensor(ANALOG_PIN_BELL);
   velocity_tmp = filter_signal(sensor_tmp);
 
   if (velocity_tmp != 0)
@@ -310,7 +310,7 @@ void MatDrum::hit_crash_2(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
 }
 
 void MatDrum::hit_kick(const byte ANALOG_PIN_KICK)
-{ hit_note(ANALOG_PIN_KICK, ACOUSTIC_BASS_DRUM);
+{ hit_note(ANALOG_PIN_KICK, ACOUSTIC_BASS_DRUM); }
 
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {

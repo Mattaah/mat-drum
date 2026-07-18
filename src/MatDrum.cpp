@@ -107,11 +107,17 @@ void MatDrum::set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
 void MatDrum::set_rim_edge_gain(const int DRUM_PIECE, float gain_value)
 {
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (1 <= gain_value && gain_value <= 32))
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (1 <= gain_value && gain_value <= 3.2))
   {
     map (gain_value, 0, 3.2, 0.2, 2.0);
     sensitivity[DRUM_PIECE-1] = gain_value;
   }
+}
+
+void MatDrum::set_xstick_threshold(const int DRUM_PIECE, int thold_value)
+{
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (0 <= thold_value && thold_value <= 127))
+  { threshold[DRUM_PIECE-1] = thold_value; }
 }
 
 bool MatDrum::is_out_scan_time(const int DRUM_PIECE)
@@ -177,25 +183,20 @@ byte MatDrum::filter_signal(const byte DRUM_PIECE, unsigned int raw_signal)
 
 void MatDrum::adjust_head(const int DRUM_PIECE, int sense, int thold, int scan_value, int mask_value)
 {
-  if (0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE)
-  {
-    if (1 <= sense && sense <= 32)
-    { sensitivity[DRUM_PIECE-1] = sense; }
-
-    if (0 <= thold && thold <= 31)
-    { threshold[DRUM_PIECE-1] = thold; } 
-
-    if (0 <= scan_value && scan_value <= 4)
-    { scan_time[DRUM_PIECE-1] = scan_value; }
-
-    if (0 <= mask_time && mask_time <= 64)
-    { mask_time[DRUM_PIECE-1] = mask_value; }
-  }
+  set_sensitivity(DRUM_PIECE, sense);
+  set_threshold(DRUM_PIECE, thold);
+  set_scan_time(DRUM_PIECE, scan_value);
+  set_mask_time(DRUM_PIECE, mask_value);
 }
 
-void MatDrum:adjust_rim(int rim_gain, int xstick_thold);
+void MatDrum:adjust_rim(const int DRUM_PIECE, int rim_gain, int xstick_thold)
+{
+  set_rim_edge_gain(rim_gain);
+  set_xstick_threshold(xstick_thold);
+}
 
-void MatDrum:adjust_edge(int edge_gain);
+void MatDrum:adjust_edge(const int DRUM_PIECE, int edge_gain)
+{ set_rim_edge_gain(edge_gain); }
 
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {

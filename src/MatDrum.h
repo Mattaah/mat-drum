@@ -94,9 +94,9 @@ public:
 
   void adjust_head(const int DRUM_PIECE, int sense, int thold, int scan_value, int mask_value);
 
-  void adjust_rim(int rim_gain, int xstick_thold);
+  void adjust_rim(const int DRUM_PIECE, int rim_gain, int xstick_thold);
 
-  void adjust_edge(int edge_gain);
+  void adjust_edge(const int DRUM_PIECE, int edge_gain);
 
   void hit_snare(const byte ANALOG_PIN_SNARE);
 

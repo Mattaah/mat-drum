@@ -19,7 +19,7 @@ MatDrum::MatDrum()
 {
   // -1  && 0b11111111 == arbitrary value
 
-  for (int x = 0; x < QUANTITY_PIECES; x = x + 1)
+  for (int x = 0; x < HIGHEST_MIDI_VALUE; x = x + 1)
   {
     sensitivity[x] = -1.0f;
     threshold[x]   = -1;
@@ -75,32 +75,32 @@ void MatDrum::end()
 
 void MatDrum::set_sensitivity(const int DRUM_PIECE, int sens_value)
 {
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && (1 <= sens_value && sens_value <= 32))
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (1 <= sens_value && sens_value <= 32))
   {
     map (sens_value, 1, 32, 0.2, 2.0);
-    sensitivity[DRUM_PIECE] = sens_value;
+    sensitivity[DRUM_PIECE-1] = sens_value;
   }
 }
 
 void MatDrum::set_threshold(const int DRUM_PIECE, int thold_value);
 {
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && (0 <= thold_value && thold_value <= 31))
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (0 <= thold_value && thold_value <= 31))
   {                             // bigger horizontal asymptote (adjust if necessary)
     map (thold_value, 0, 31, 0, (0.8 * 127)); 
-    threshold[DRUM_PIECE] = thold_value;
+    threshold[DRUM_PIECE-1] = thold_value;
   }
 }
 
 void MatDrum::set_scan_time(const int DRUM_PIECE, int scan_value);
 {
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && (0 <= scan_value && scan_value <= 4))
-  { scan_time[DRUM_PIECE] = scan_value; }
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (0 <= scan_value && scan_value <= 4))
+  { scan_time[DRUM_PIECE-1] = scan_value; }
 }
 
 void MatDrum::set_mask_time(const int DRUM_PIECE, int mask_time);
 {
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && (0 <= mask_time && mask_time <= 64))
-  { mask_time[DRUM_PIECE] = mask_time; }
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (0 <= mask_time && mask_time <= 64))
+  { mask_time[DRUM_PIECE-1] = mask_time; }
 }
 
 void MatDrum::set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
@@ -109,11 +109,11 @@ bool MatDrum::is_out_scan_time(const int DRUM_PIECE)
 {
   bool answer = false;
 
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && !hit_previous_note[DRUM_PIECE])
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && !hit_previous_note[DRUM_PIECE-1])
   {
     current_time_scan = millis();
 
-    if (current_time_scan - previous_time_scan > scan_time[DRUM_PIECE])
+    if (current_time_scan - previous_time_scan > scan_time[DRUM_PIECE-1])
     { answer = true; previous_time_scan = current_time_scan; }
   }
 
@@ -124,11 +124,11 @@ bool MatDrum::is_out_mask_time(const int DRUM_PIECE)
 {
   bool answer = false;
 
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && hit_previous_note[DRUM_PIECE])
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && hit_previous_note[DRUM_PIECE-1])
   {
     current_time_mask = millis();
 
-    if (current_time_mask - previous_time_mask > mask_time[DRUM_PIECE])
+    if (current_time_mask - previous_time_mask > mask_time[DRUM_PIECE-1])
     { answer = true; previous_time_mask = current_time_mask; }
   }
 
@@ -139,7 +139,7 @@ bool MatDrum::is_out_threshold(const int DRUM_PIECE, int velocity)
 {
   bool answer = false;
 
-  if ((0 <= DRUM_PIECE && DRUM_PIECE < QUANTITY_PIECES) && velocity > threshold[DRUM_PIECE])
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && velocity > threshold[DRUM_PIECE-1])
   { answer = true; }
 
   return (answer);
@@ -156,13 +156,13 @@ byte MatDrum::filter_signal(const byte DRUM_PIECE, unsigned int raw_signal)
   if (0 <= raw_signal && raw_signal <= 1023)
   {
     velocity = map(raw_signal, 0, 1023, 0, 127);
-    new_sensitivty = map(sensitivity[DRUM_PIECE], 1, 32, 0.2, 2.0);
+    new_sensitivty = map(sensitivity[DRUM_PIECE-1], 1, 32, 0.2, 2.0);
 
     new_signal = velocity * new_sensitivty;
     if (new_signal > 127)
     { new_signal = 127; }
   }
-  
+
   return (new_signal);
 }
 
@@ -171,9 +171,9 @@ void MatDrum::send_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
   byte scan_tmp = 0b0, mask_tmp = 0b0, thold_tmp = 0b0, velocity_tmp = 0b0;
   int sensor_tmp = 0;
 
-  scan_tmp  = scan_time[DRUM_PIECE];
-  mask_tmp  = mask_time[DRUM_PIECE];
-  thold_tmp = threshold[DRUM_PIECE];
+  scan_tmp  = scan_time[DRUM_PIECE-1];
+  mask_tmp  = mask_time[DRUM_PIECE-1];
+  thold_tmp = threshold[DRUM_PIECE-1];
 
   sensor_tmp   =   read_sensor(ANALOG_PIN);
   velocity_tmp = filter_signal(sensor_tmp);
@@ -182,8 +182,8 @@ void MatDrum::send_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
       (scan_tmp == 0 && mask_tmp == 0 && thold_tmp == 0))
   {
     if (velocity_tmp != 0)
-    { send_note_on(10, DRUM_PIECE, velocity_tmp);  hit_previous_note[DRUM_PIECE] = true;  }
+    { send_note_on(10, DRUM_PIECE, velocity_tmp);  hit_previous_note[DRUM_PIECE-1] = true;  }
     else
-    { send_note_off(10, DRUM_PIECE, velocity_tmp); hit_previous_note[DRUM_PIECE] = false; }
+    { send_note_off(10, DRUM_PIECE, velocity_tmp); hit_previous_note[DRUM_PIECE-1] = false; }
   }
 }

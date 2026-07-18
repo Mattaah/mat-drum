@@ -100,7 +100,7 @@ public:
 
   void hit_snare(const byte ANALOG_PIN_SNARE);
 
-  void hit_rim(const byte ANALOG_PIN_RIM, int rim_gain, int xstick_thold);
+  void hit_rim(const byte ANALOG_PIN_RIM);
 
   void hit_ride(const byte ANALOG_PIN_BOW);
 

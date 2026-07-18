@@ -45,7 +45,7 @@
   // constants to ensure the program transmits data correctly.
 #define ACOUSTIC_BASS_DRUM 35
 #define BASS_DRUM          36 
-#define SIDE_STICK         37
+#define RIM                37
 #define SNARE              38 
 #define HAND_CLAP          39
 #define RIM_SHOT           40 

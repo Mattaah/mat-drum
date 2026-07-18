@@ -160,20 +160,21 @@ bool MatDrum::is_out_threshold(const int DRUM_PIECE, int velocity)
   return (answer);
 }
 
-int MatDrum::read_sensor(const byte ANALOG_PIN)
+int MatDrum::read_analog_sensor(const byte ANALOG_PIN)
 { return (analogWrite(ANALOG_PIN); }
+
+int MatDrum::read_digital_sensor(const byte DIGITAL_PIN)
+{ return (digitalWrite(DIGITAL_PIN); }
 
 byte MatDrum::filter_signal(const byte DRUM_PIECE, unsigned int raw_signal)
 {
-  byte  new_signal     =  0b0;
-  float new_sensitivty = 0.0f;
+  byte new_signal =  0b0;
 
   if (0 <= raw_signal && raw_signal <= 1023)
   {
     velocity = map(raw_signal, 0, 1023, 0, 127);
-    new_sensitivty = map(sensitivity[DRUM_PIECE-1], 1, 32, 0.2, 2.0);
 
-    new_signal = velocity * new_sensitivty;
+    new_signal = velocity * sensitivity[DRUM_PIECE-1];
     if (new_signal > 127)
     { new_signal = 127; }
   }
@@ -197,6 +198,30 @@ void MatDrum:adjust_rim(const int DRUM_PIECE, int rim_gain, int xstick_thold)
 
 void MatDrum:adjust_edge(const int DRUM_PIECE, int edge_gain)
 { set_rim_edge_gain(edge_gain); }
+
+void MatDrum::hit_snare(const byte ANALOG_PIN_SNARE)
+{ hit_note(ANALOG_PIN_SNARE, SNARE); }
+
+void MatDrum::hit_rim(const byte ANALOG_PIN_RIM)
+{
+  byte velocity_tmp = 0b0;
+  int sensor_tmp = 0;
+
+  sensor_tmp = read_analog_sensor(ANALOG_PIN_RIM);
+  velocity_tmp = filter_signal(sensor_tmp);
+
+  if (velocity_tmp != 0)
+  {
+    if (velocity_tmp >= threshold[RIM-1])
+    { send_note_on(10, RIM_SHOT, velocity_tmp); }
+    else
+    { send_note_on(10, RIM,      velocity_tmp); }
+
+    hit_previous_note[DRUM_PIECE-1] = true;
+  }
+  else
+  { send_note_off(10, RIM, velocity_tmp); hit_previous_note[DRUM_PIECE-1] = false; }
+}
 
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)
 {

@@ -105,6 +105,15 @@ void MatDrum::set_mask_time(const int DRUM_PIECE, int mask_time);
 
 void MatDrum::set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
+void MatDrum::set_rim_edge_gain(const int DRUM_PIECE, float gain_value)
+{
+  if ((0 <= DRUM_PIECE && DRUM_PIECE < HIGHEST_MIDI_VALUE) && (1 <= gain_value && gain_value <= 32))
+  {
+    map (gain_value, 0, 3.2, 0.2, 2.0);
+    sensitivity[DRUM_PIECE-1] = gain_value;
+  }
+}
+
 bool MatDrum::is_out_scan_time(const int DRUM_PIECE)
 {
   bool answer = false;

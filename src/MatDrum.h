@@ -78,7 +78,7 @@ public:
 
   void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
-  void set_rim_edge_gain(const int DRUM_PIECE, int gain_value);
+  void set_rim_edge_gain(const int DRUM_PIECE, float gain_value);
 
   bool is_out_scan_time(const int DRUM_PIECE);
 

@@ -78,6 +78,8 @@ public:
 
   void set_velocity_curve(const int DRUM_PIECE, const int velo_curve);
 
+  void set_rim_edge_gain(const int DRUM_PIECE, int gain_value);
+
   bool is_out_scan_time(const int DRUM_PIECE);
 
   bool is_out_mask_time(const int DRUM_PIECE);
@@ -87,8 +89,6 @@ public:
   int read_sensor(const byte ANALOG_PIN);
 
   byte filter_signal(int raw_signal);
-
-  byte rim_edge_gain()
 
   void hit_snare(const byte ANALOG_PIN_HEAD, int sense, int thold, int scan_time, int mask_time);
 
@@ -103,15 +103,20 @@ public:
             int sense, int thold, int scan_time, int mask_time, 
             int rim_gain_bow, int rim_gain_edge);
 
-  void hit_hihat();
+  void hit_hihat(const byte ANALOG_PIN_BOW, int sense, int thold, int scan_time, int mask_time);
 
-  void hit_hihat_control();
+  void hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE, 
+                 int sense, int thold, int scan_time, int mask_time, int rim_gain_edge);
 
-  void hit_tom();
+  void hit_hihat_control(const byte DIGITAL_PIN_PEDAL);
 
-  void hit_crash();
+  void hit_hihat_control(const byte ANALOG_PIN_PEDAL);
 
-  void hit_kick();
+  void hit_tom(const byte ANALOG_PIN_TOM, int sense, int thold, int scan_time, int mask_time);
+
+  void hit_crash(const byte ANALOG_PIN_CRASH, int sense, int thold, int scan_time, int mask_time);
+
+  void hit_kick(const byte ANALOG_PIN_KICK, int sense, int thold, int scan_time, int mask_time);
 
   void hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE);
 }

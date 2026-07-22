@@ -98,6 +98,8 @@ public:
 
   void adjust_edge(const int DRUM_PIECE, int edge_gain);
 
+  void adjust_HH_control(const int thold_oc);
+
   void hit_snare(const byte ANALOG_PIN_SNARE);
 
   void hit_rim(const byte ANALOG_PIN_RIM);

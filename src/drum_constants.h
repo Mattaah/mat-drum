@@ -98,5 +98,8 @@
 #define MUTE_TRIANGLE      80
 #define OPEN_TRIANGLE      81
 
-// CONTROL_HASH - control change used to modify the hihat sounds and other things on MIDI controllers
-#define HIHAT_CC 4
+// HIHAT PEDAL PARAMETERES
+  // control change used to modify the hihat sounds and other things on MIDI controllers
+#define HIHAT_CC     4
+  // delimit the moment to swap from open to closed or closed to open, via hihat pedal signal
+#define THOLD_HIHAT 63

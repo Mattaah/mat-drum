@@ -192,12 +192,12 @@ void MatDrum::adjust_head(const int DRUM_PIECE, int sense, int thold, int scan_v
 
 void MatDrum:adjust_rim(const int DRUM_PIECE, int rim_gain, int xstick_thold)
 {
-  set_rim_edge_gain(rim_gain);
-  set_xstick_threshold(xstick_thold);
+  set_rim_edge_gain(DRUM_PIECE, rim_gain);
+  set_xstick_threshold(DRUM_PIECE, xstick_thold);
 }
 
 void MatDrum:adjust_edge(const int DRUM_PIECE, int edge_gain)
-{ set_rim_edge_gain(edge_gain); }
+{ set_rim_edge_gain(DRUM_PIECE, edge_gain); }
 
 void MatDrum::hit_snare(const byte ANALOG_PIN_SNARE)
 { hit_note(ANALOG_PIN_SNARE, SNARE); }
@@ -312,12 +312,45 @@ void MatDrum::hit_crash_2(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
 void MatDrum::hit_kick(const byte ANALOG_PIN_KICK)
 { hit_note(ANALOG_PIN_KICK, ACOUSTIC_BASS_DRUM); }
 
-void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW)
+void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_PEDAL)
 {
-  
+  int read_tmp = map(analogRead(ANALOG_PIN_PEDAL), 0, 1023, 0, 127);
+
+  // send control change first
+  hihat_control_CC(ANALOG_PIN_PEDAL);
+
+  if (read_tmp >= THOLD_HIHAT)
+  {
+    // send closed hihat
+    hit_note(ANALOG_PIN_BOW, CLOSED_BOW_HH);
+  }
+  else
+  {
+    // send open hihat
+    hit_note(ANALOG_PIN_BOW, OPEN_BOW_HH);
+  }
 }
 
-void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE);
+void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_PEDAL)
+{
+  int read_tmp_1 = map(analogRead(ANALOG_PIN_PEDAL), 0, 1023, 0, 127);
+
+  // send control change first
+  hihat_control_CC(ANALOG_PIN_PEDAL);
+
+  if (read_tmp >= THOLD_HIHAT)
+  {
+    // send closed hihat
+    hit_note(ANALOG_PIN_BOW, CLOSED_BOW_HH);
+    hit_note(ANALOG_PIN_EDGE, CLOSED_EDGE_HH);
+  }
+  else
+  {
+    // send open hihat
+    hit_note(ANALOG_PIN_BOW, OPEN_BOW_HH);
+    hit_note(ANALOG_PIN_EDGE, OPEN_EDGE_HH);
+  }
+}
 
 void MatDrum::hihat_control_CC(const byte DIGITAL_PIN_PEDAL)
 {

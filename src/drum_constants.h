@@ -57,6 +57,10 @@
 #define HIGH_TOM           50
 #define CLOSED_HH          42 
 #define OPEN_HH            46 
+#define CLOSED_BOW_HH      // define
+#define OPEN_BOW_HH        // define
+#define CLOSED_EDGE_HH     // define
+#define OPEN_EDGE_HH       // define
 #define FOOT_HH            44 
 #define FOOT_SPLASH_HH     28
 #define CRASH_1_BOW        49
@@ -93,3 +97,6 @@
 #define OPEN_CUICA         79
 #define MUTE_TRIANGLE      80
 #define OPEN_TRIANGLE      81
+
+// CONTROL_HASH - control change used to modify the hihat sounds and other things on MIDI controllers
+#define HIHAT_CC 4

@@ -98,7 +98,9 @@ public:
 
   void adjust_edge(const int DRUM_PIECE, int edge_gain);
 
-  void adjust_HH_control(const int thold_oc);
+  void hihat_control_CC(const byte DIGITAL_PIN_PEDAL);
+
+  void hihat_control_CC(const byte ANALOG_PIN_PEDAL);
 
   void hit_snare(const byte ANALOG_PIN_SNARE);
 
@@ -137,10 +139,6 @@ public:
   void hit_hihat(const byte ANALOG_PIN_BOW);
 
   void hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE);
-
-  void hihat_control_CC(const byte DIGITAL_PIN_PEDAL);
-
-  void hihat_control_CC(const byte ANALOG_PIN_PEDAL);
 
   void hit_hihat_pedal();
 

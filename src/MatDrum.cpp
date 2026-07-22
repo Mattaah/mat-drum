@@ -199,6 +199,26 @@ void MatDrum:adjust_rim(const int DRUM_PIECE, int rim_gain, int xstick_thold)
 void MatDrum:adjust_edge(const int DRUM_PIECE, int edge_gain)
 { set_rim_edge_gain(DRUM_PIECE, edge_gain); }
 
+void MatDrum::hihat_control_CC(const byte DIGITAL_PIN_PEDAL)
+{
+  int velocity_tmp = 0, read = 0;
+  
+  read = digitalRead(DIGITAL_PIN_PEDAL);
+  if (read == LOW)
+  { velocity_tmp = 0;   }
+  else
+  { velocity_tmp = 127; }
+
+  send_control_change(channel, HIHAT_CC, velocity_tmp);
+}
+
+void MatDrum::hihat_control_CC(const byte ANALOG_PIN_PEDAL)
+{
+  int velocity_tmp = map(analogRead(ANALOG_PIN_PEDAL, 0, 1023, 0, 127));
+
+  send_control_change(channel, HIHAT_CC, velocity_tmp));
+}
+
 void MatDrum::hit_snare(const byte ANALOG_PIN_SNARE)
 { hit_note(ANALOG_PIN_SNARE, SNARE); }
 
@@ -350,26 +370,6 @@ void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE, c
     hit_note(ANALOG_PIN_BOW, OPEN_BOW_HH);
     hit_note(ANALOG_PIN_EDGE, OPEN_EDGE_HH);
   }
-}
-
-void MatDrum::hihat_control_CC(const byte DIGITAL_PIN_PEDAL)
-{
-  int velocity_tmp = 0, read = 0;
-  
-  read = digitalRead(DIGITAL_PIN_PEDAL);
-  if (read == LOW)
-  { velocity_tmp = 0;   }
-  else
-  { velocity_tmp = 127; }
-
-  send_control_change(channel, HIHAT_CC, velocity_tmp);
-}
-
-void MatDrum::hihat_control_CC(const byte ANALOG_PIN_PEDAL)
-{
-  int velocity_tmp = map(analogRead(ANALOG_PIN_PEDAL, 0, 1023, 0, 127));
-
-  send_control_change(channel, HIHAT_CC, velocity_tmp));
 }
 
 void MatDrum::hit_note(const byte ANALOG_PIN, const byte DRUM_PIECE)

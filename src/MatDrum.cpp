@@ -312,9 +312,16 @@ void MatDrum::hit_crash_2(const byte ANALOG_PIN_EDGE, const byte ANALOG_PIN_BOW)
 void MatDrum::hit_kick(const byte ANALOG_PIN_KICK)
 { hit_note(ANALOG_PIN_KICK, ACOUSTIC_BASS_DRUM); }
 
+void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW)
+{
+  
+}
+
+void MatDrum::hit_hihat(const byte ANALOG_PIN_BOW, const byte ANALOG_PIN_EDGE);
+
 void MatDrum::hihat_control_CC(const byte DIGITAL_PIN_PEDAL)
 {
-  byte velocity_tmp = 0, read = 0;
+  int velocity_tmp = 0, read = 0;
   
   read = digitalRead(DIGITAL_PIN_PEDAL);
   if (read == LOW)

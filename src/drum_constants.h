@@ -57,16 +57,16 @@
 #define HIGH_TOM           50
 #define CLOSED_HH          42 
 #define OPEN_HH            46 
-#define CLOSED_BOW_HH      // define
-#define OPEN_BOW_HH        // define
-#define CLOSED_EDGE_HH     // define
-#define OPEN_EDGE_HH       // define
+#define CLOSED_BOW_HH      42
+#define OPEN_BOW_HH        46
+#define CLOSED_EDGE_HH     22
+#define OPEN_EDGE_HH       26
 #define FOOT_HH            44 
 #define FOOT_SPLASH_HH     28
 #define CRASH_1_BOW        49
-#define CRASH_1_EDGE       // define
+#define CRASH_1_EDGE       55
 #define CRASH_2_BOW        57
-#define CRASH_2_EDGE       // define 
+#define CRASH_2_EDGE       52
 #define RIDE_1             51 
 #define RIDE_2             59 
 #define RIDE_BELL          53 

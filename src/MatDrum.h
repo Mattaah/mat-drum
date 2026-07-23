@@ -23,11 +23,11 @@ class MatDrum
 private:
   // variables to store trigger setings (sensitivity, threshold, scan time, mask time, velocity curve)
    // index == drum pieces quantity
-  float    sensitivity[HIGHEST_MIDI_VALUE];
-  int        threshold[HIGHEST_MIDI_VALUE]; 
-  int        scan_time[HIGHEST_MIDI_VALUE]; 
-  int        mask_time[HIGHEST_MIDI_VALUE]; 
-  int   velocity_curve[HIGHEST_MIDI_VALUE];
+  float    sensitivity[HIGHEST_MIDI_NOTE_VALUE];
+  int        threshold[HIGHEST_MIDI_NOTE_VALUE]; 
+  int        scan_time[HIGHEST_MIDI_NOTE_VALUE]; 
+  int        mask_time[HIGHEST_MIDI_NOTE_VALUE]; 
+  int   velocity_curve[HIGHEST_MIDI_NOTE_VALUE];
   // variables to store data read
   int      signal_kick;
   int     signal_snare;
@@ -46,7 +46,7 @@ private:
   int signal_ride_bell;
   int signal_ride_edge;
   // control state variables
-  bool hit_previous_note[HIGHEST_MIDI_VALUE];
+  bool hit_previous_note[HIGHEST_MIDI_NOTE_VALUE];
   bool read_start;
   // time variables
   unsigned long previous_time_scan;

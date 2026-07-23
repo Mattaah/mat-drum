@@ -14,9 +14,9 @@
 // total drum pieces/notes to use
 #define QUANTITY_PIECES    16
 
-#define LOWEST_MIDI_VALUE  35
+#define LOWEST_MIDI_NOTE_VALUE  35
 
-#define HIGHEST_MIDI_VALUE 81
+#define HIGHEST_MIDI_NOTE_VALUE 81
 
 #define MIDI_NOTE_TOTAL ((HIGHEST_MIDI_VALUE - LOWEST_MIDI_VALUE) + 1)
 
